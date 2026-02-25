@@ -26,14 +26,24 @@ void led_blink_callback(const char* args) {
     led_task_state_set(LED_STATE_BLINK);
 }
 
-void get_adc_callback() {
+void get_adc_callback(const char* args) {
     float voltage_V = adc_task_measure_voltage();
     printf("%f\n", voltage_V);
 }
 
-void get_temp_callback() {
+void get_temp_callback(const char* args) {
     float temp_C = adc_task_measure_temperature();
     printf("%f\n", temp_C);
+}
+
+void tm_start_callback(const char* args) {
+    adc_task_set_state(ADC_TASK_STATE_RUN);
+    printf("tm start\n");
+}
+
+void tm_stop_callback(const char* args) {
+    adc_task_set_state(ADC_TASK_STATE_IDLE);
+    printf("tm stop\n");
 }
 
 api_t device_api[] =
@@ -44,6 +54,8 @@ api_t device_api[] =
     {"blink", led_blink_callback, "blink"},
     {"get_adc", get_adc_callback, "measure voltage on GPIO 26"},
     {"get_temp", get_temp_callback, "measure temperature"},
+    {"tm_start_callback", tm_start_callback, "start telemetry"},
+    {"tm_stop_callback", tm_stop_callback, "stop telemetry"},
 	{NULL, NULL, NULL},
 };
 
