@@ -54,8 +54,8 @@ api_t device_api[] =
     {"blink", led_blink_callback, "blink"},
     {"get_adc", get_adc_callback, "measure voltage on GPIO 26"},
     {"get_temp", get_temp_callback, "measure temperature"},
-    {"tm_start_callback", tm_start_callback, "start telemetry"},
-    {"tm_stop_callback", tm_stop_callback, "stop telemetry"},
+    {"tm_start", tm_start_callback, "start telemetry"},
+    {"tm_stop", tm_stop_callback, "stop telemetry"},
 	{NULL, NULL, NULL},
 };
 
@@ -69,7 +69,8 @@ int main()
     while (1) {
         char* c = stdio_task_handle();
         protocol_task_handle(c);
-    led_task_handle();
+        led_task_handle();
+        adc_task_handle();
     }
 }
 

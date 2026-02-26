@@ -41,7 +41,7 @@ float adc_task_measure_temperature()
 void adc_task_set_state(adc_task_state_t state)
 {
     adc_state = state;
-    if (state == ADC_TASK_STATE_RUN) {
+    if (adc_state == ADC_TASK_STATE_RUN) {
         last_measure_ts = time_us_64();
     }
 }
