@@ -12,3 +12,5 @@ void bme280_read_regs(uint8_t start_reg_address, uint8_t* buffer, uint8_t length
 void rp2040_i2c_read(uint8_t* buffer, uint16_t length);
 
 void rp2040_i2c_write(uint8_t* data, uint16_t size);
+
+void bme280_write_reg(uint8_t reg_address, uint8_t value);

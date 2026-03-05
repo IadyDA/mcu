@@ -21,12 +21,8 @@ void bme280_read_regs(uint8_t start_reg_address, uint8_t* buffer, uint8_t length
 	bme280_ctx.i2c_read(buffer, length);
 }
 
-// void rp2040_i2c_read(uint8_t* buffer, uint16_t length)
-// {
-// 	i2c_read_timeout_us(i2c1, 0x76, buffer, length, false, 100000);
-// }
-
-// void rp2040_i2c_write(uint8_t* data, uint16_t size)
-// {
-// 	i2c_write_timeout_us(i2c1, 0x76, data, size, false, 100000);
-// }
+void bme280_write_reg(uint8_t reg_address, uint8_t value)
+{
+    uint8_t data[2] = {reg_address, value};
+    bme280_ctx.i2c_write(data, sizeof(data));
+}

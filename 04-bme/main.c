@@ -65,7 +65,7 @@ void read_regs_callback(const char* args) {
     uint32_t N = 0;
 
     // Парсим строку. Если пользователь ввел не 2 числа, выходим.
-    if (sscanf(args, "%x %u", &addr, &N) != 2) {
+    if (sscanf(args, "%x %x", &addr, &N) != 2) {
         printf("Usage: read_regs <addr_hex> <N_dec>\n");
         return;
     }
@@ -89,6 +89,30 @@ void read_regs_callback(const char* args) {
     }
 }
 
+void write_reg_callback(const char* args)
+{
+    uint32_t addr = 0;
+    uint32_t N = 0;
+
+    if (sscanf(args, "%x %x", &addr, &N) != 2) {
+        printf("Usage: read_regs <addr_hex> <N_dec>\n");
+        return;
+    }
+
+    if (addr > 0xFF || N > 0xFF) {
+        printf("Error: Invalid address (0x%X) or count (%u)\n", addr, N);
+        return;
+    }
+
+    uint8_t data[2];
+    data[0] = (uint8_t)addr;
+    data[1] = (uint8_t)N;
+
+    rp2040_i2c_write(data, 2);
+
+    printf("Write: Register [0x%02X] set to 0x%02X\n", (uint8_t)addr, (uint8_t)N);
+}
+
 api_t device_api[] =
 {
 	{"version", version_callback, "get device name and firmware version"},
@@ -96,6 +120,7 @@ api_t device_api[] =
     {"off", led_off_callback, "dark"},
     {"blink", led_blink_callback, "blink"},
     {"read_regs", read_regs_callback, "read regs"},
+    {"write_reg", write_reg_callback, "write reg"},
 	{NULL, NULL, NULL},
 };
 
@@ -118,4 +143,3 @@ int main()
     led_task_handle();
     }
 }
-
