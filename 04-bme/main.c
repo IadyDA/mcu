@@ -37,29 +37,6 @@ void led_blink_callback(const char* args) {
     led_task_state_set(LED_STATE_BLINK);
 }
 
-// void read_regs_callback(uint32_t addr, uint32_t N) {
-
-//     // uint8_t addr = 0;
-//     // uint8_t N = 0;
-
-//     // if (sscanf(args, "%x %u", &addr, &N) != 2) {
-//     //     printf("Usage: read_reg <addr_hex> <N_dec>\n");
-//     //     return;
-//     // }
-//     // printf("Reading %u regs from 0x%x\n", N, addr);
-
-//     if (addr > 0xFF) return;
-//     if (N > 0xFF) return;
-//     if (addr + N > 0x100) return;
-
-//     uint8_t buffer[256] = {0};
-//     bme280_read_regs(addr, buffer, N);
-//     for (int i = 0; i < N; i++)
-//     {
-// 	    printf("bme280 register [0x%X] = 0x%X\n", addr + i, buffer[i]);
-//     }
-// }
-
 void read_regs_callback(const char* args) {
     uint32_t addr = 0;
     uint32_t N = 0;
