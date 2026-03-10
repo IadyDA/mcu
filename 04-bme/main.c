@@ -90,6 +90,21 @@ void write_reg_callback(const char* args)
     printf("Write: Register [0x%02X] set to 0x%02X\n", (uint8_t)addr, (uint8_t)N);
 }
 
+void temp_raw_callback(const char* args) {
+    uint16_t raw = bme280_read_temp_raw();
+    printf("Temperature raw: %u\n", raw);
+}
+
+void pres_raw_callback(const char* args) {
+    uint16_t raw = bme280_read_pres_raw();
+    printf("Pressure raw: %u\n", raw);
+}
+
+void hum_raw_callback(const char* args) {
+    uint16_t raw = bme280_read_hum_raw();
+    printf("Humidity raw: %u\n", raw);
+}
+
 api_t device_api[] =
 {
 	{"version", version_callback, "get device name and firmware version"},
@@ -98,6 +113,10 @@ api_t device_api[] =
     {"blink", led_blink_callback, "blink"},
     {"read_regs", read_regs_callback, "read regs"},
     {"write_reg", write_reg_callback, "write reg"},
+    {"temp_raw", temp_raw_callback, "read raw temperature counts"},
+    {"pres_raw", pres_raw_callback, "read raw pressure counts"},
+    {"hum_raw", hum_raw_callback, "read raw humidity counts"},
+
 	{NULL, NULL, NULL},
 };
 

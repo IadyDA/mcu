@@ -1,6 +1,8 @@
 #pragma once
 
 #include <stdint.h>
+#include <stdio.h>
+
 
 typedef void (*bme280_i2c_read)(uint8_t* buffer, uint16_t length);
 typedef void (*bme280_i2c_write)(uint8_t* data, uint16_t size);
@@ -14,3 +16,7 @@ void rp2040_i2c_read(uint8_t* buffer, uint16_t length);
 void rp2040_i2c_write(uint8_t* data, uint16_t size);
 
 void bme280_write_reg(uint8_t reg_address, uint8_t value);
+
+uint16_t bme280_read_temp_raw();
+uint16_t bme280_read_pres_raw();
+uint16_t bme280_read_hum_raw();
