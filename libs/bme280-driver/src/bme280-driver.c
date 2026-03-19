@@ -73,3 +73,5 @@ uint16_t bme280_read_hum_raw()
     uint16_t value = ((uint16_t)read[0] << 8) | ((uint16_t)read[1]);
 	return value;
 }
+
+
