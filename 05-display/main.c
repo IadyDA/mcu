@@ -181,6 +181,33 @@ void disp_frect_callback(const char* args)
     }
 }
 
+void disp_text_callback(const char* args)
+{
+    uint32_t x = 0;
+    uint32_t y = 0;
+    uint32_t fg_hex = 0;
+    uint32_t bg_hex = 0;
+    int offset = 0;
+
+    int result = sscanf(args, "%u %u %x %x %n", &x, &y, &fg_hex, &bg_hex, &offset);
+
+    if (result >= 4)
+    {
+        uint16_t fg_color = RGB888_2_RGB565(fg_hex);
+        uint16_t bg_color = RGB888_2_RGB565(bg_hex);
+        
+        // Указатель на начало текста в строке args
+        const char* text = args + offset;
+
+        // Если перед текстом остался пробел, пропустим его
+        while (*text == ' ') text++;
+
+        // Вызываем функцию отрисовки (шрифт jetbrains_font уже подключен в вашем коде)
+        ili9341_draw_text(&ili9341_display, (uint16_t)x, (uint16_t)y, text, &jetbrains_font, fg_color, bg_color);
+    }
+
+}
+
 void help_callback(const char* args);
 
 
@@ -197,6 +224,7 @@ api_t device_api[] =
     {"disp_line", disp_line_callback, "draw line"},
     {"disp_rect", disp_rect_callback, "draw rectangle"},
     {"disp_frect", disp_frect_callback, "draw filled rectangle"},
+    {"disp_text", disp_text_callback, "writing"},
 	{NULL, NULL, NULL},
 };
 
