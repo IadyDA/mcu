@@ -9,6 +9,17 @@ typedef struct
 
 static bme280_ctx_t bme280_ctx = {0};
 
+typedef struct {
+    uint16_t dig_T1; int16_t dig_T2; int16_t dig_T3;
+    uint16_t dig_P1; int16_t dig_P2; int16_t dig_P3; int16_t dig_P4;
+    int16_t dig_P5; int16_t dig_P6; int16_t dig_P7; int16_t dig_P8; int16_t dig_P9;
+    uint8_t  dig_H1; int16_t dig_H2; uint8_t  dig_H3;
+    int16_t dig_H4; int16_t dig_H5; int8_t  dig_H6;
+    int32_t t_fine;
+} bme280_calib_t;
+
+static bme280_calib_t calib = {0};
+
 void bme280_init(bme280_i2c_read i2c_read, bme280_i2c_write i2c_write)
 {
     bme280_ctx.i2c_read = i2c_read;
@@ -74,4 +85,11 @@ uint16_t bme280_read_hum_raw()
 	return value;
 }
 
+float temp_in_SI()
+{
+
+}
+
+float pres_in_SI();
+float hum_in_SI();
 

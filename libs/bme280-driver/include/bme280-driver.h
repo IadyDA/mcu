@@ -20,3 +20,7 @@ void bme280_write_reg(uint8_t reg_address, uint8_t value);
 uint16_t bme280_read_temp_raw();
 uint16_t bme280_read_pres_raw();
 uint16_t bme280_read_hum_raw();
+
+float temp_in_SI();
+float pres_in_SI();
+float hum_in_SI();

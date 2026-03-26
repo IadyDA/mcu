@@ -37,18 +37,6 @@ void led_blink_callback(const char* args) {
     led_task_state_set(LED_STATE_BLINK);
 }
 
-void led_blink_set_period_ms_callback(const char* args) {
-    uint period_ms = 0;
-    sscanf(args, "%u", &period_ms);
-
-    if (period_ms == 0) {
-        printf("ERROR: period_ms = 0");
-        return;
-    }
-
-    led_task_set_blink_period_ms(period_ms);
-}
-
 void read_regs_callback(const char* args) {
     uint32_t addr = 0;
     uint32_t N = 0;
@@ -117,38 +105,20 @@ void hum_raw_callback(const char* args) {
     printf("Humidity raw: %u\n", raw);
 }
 
-void temp_callback(const char* args) {
-    float temp = bme280_read_temp_raw();
-    printf("%.2f °C\n", temp);
-}
-
-void help_callback(const char* args);
-
-
 api_t device_api[] =
 {
 	{"version", version_callback, "get device name and firmware version"},
     {"on", led_on_callback, "light"},
     {"off", led_off_callback, "dark"},
     {"blink", led_blink_callback, "blink"},
-    {"set_period", led_blink_set_period_ms_callback, "set the blink period"},
     {"read_regs", read_regs_callback, "read regs"},
     {"write_reg", write_reg_callback, "write reg"},
     {"temp_raw", temp_raw_callback, "read raw temperature counts"},
     {"pres_raw", pres_raw_callback, "read raw pressure counts"},
     {"hum_raw", hum_raw_callback, "read raw humidity counts"},
-    {"temp", temp_callback, "temp"},
-    {"help", help_callback, "print commands description"},
+
 	{NULL, NULL, NULL},
 };
-
-void help_callback(const char* args) {
-    for (int i = 0; device_api[i].command_name != NULL; i++) {
-        printf("Command '%s': '%s'\n", 
-               device_api[i].command_name, 
-               device_api[i].command_help);
-    }
-}
 
 int main()
 {
@@ -169,4 +139,3 @@ int main()
     led_task_handle();
     }
 }
-
